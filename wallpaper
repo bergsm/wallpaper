@@ -14,16 +14,19 @@ mv $HOME/pics/wallpapers/wallpaper.jpeg $HOME/pics/wallpapers/wallpaper_old_$(da
 
 cp $1 $HOME/pics/wallpapers/wallpaper.jpeg
 
+# Copy wallpaper image to firefox (Long term, try symlink to wallpaper.jpeg?)
+cp $HOME/pics/wallpapers/wallpaper.jpeg $HOME/.mozilla/firefox/gxmftrrv.default-release/chrome/wallpaper.jpeg
+
+# Use pywal to adjust colors for wallpaper
+wal -i $HOME/pics/wallpapers/wallpaper.jpeg
 
 # Use feh to set wallpaper?
 feh $HOME/pics/wallpapers/wallpaper.jpeg --bg-fill
 
-# Use pywal to adjust colors for wallpaper
-wal -i $HOME/pics/wallpapers/wallpaper.jpeg
 
 #TODO Change terminal colors in .Xresources
 
 #TODO refresh open terminals?
 
-# Copy wallpaper image to firefox (Long term, try symlink to wallpaper.jpeg?)
-cp $HOME/pics/wallpapers/wallpaper.jpeg $HOME/.mozilla/firefox/gxmftrrv.default-release/chrome/wallpaper.jpeg
+#Set multilockscreen wallpapers
+multilockscreen -u $HOME/pics/wallpapers/wallpaper.jpeg
