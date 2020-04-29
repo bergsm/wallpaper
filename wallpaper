@@ -20,13 +20,12 @@ cp $HOME/pics/wallpapers/wallpaper.jpeg $HOME/.mozilla/firefox/gxmftrrv.default-
 # Use pywal to adjust colors for wallpaper
 wal -i $HOME/pics/wallpapers/wallpaper.jpeg
 
-# Use feh to set wallpaper?
-feh $HOME/pics/wallpapers/wallpaper.jpeg --bg-fill
-
-
 #TODO Change terminal colors in .Xresources
 
-#TODO refresh open terminals?
+# Reload i3 again?
+
+# Use feh to set wallpaper?
+#feh $HOME/pics/wallpapers/wallpaper.jpeg --bg-fill
 
 #Set multilockscreen wallpapers
 multilockscreen -u $HOME/pics/wallpapers/wallpaper.jpeg
