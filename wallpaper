@@ -1,0 +1,29 @@
+#!/bin/bash
+
+# Active wallpaper lives at $HOME/pics/wallpapers/wallpaper.jpeg
+
+
+#TODO check for arg to image
+if [ $@ -ne 1 ] || [ $1 #is not an image ]; then
+    echo "Wallpaper requries image file as argument"
+    exit 1
+fi
+
+#TODO Replace active wallpaper with new wallpaper
+mv $HOME/pics/wallpapers/wallpaper.jpeg $HOME/pics/wallpapers/wallpaper_old_$(date '+%b%d%Y_%H%M%S').jpeg
+
+cp $1 $HOME/pics/wallpapers/wallpaper.jpeg
+
+
+# Use feh to set wallpaper?
+feh $HOME/pics/wallpapers/wallpaper.jpeg --bg-fill
+
+# Use pywal to adjust colors for wallpaper
+wal -i $HOME/pics/wallpapers/wallpaper.jpeg
+
+#TODO Change terminal colors in .Xresources
+
+#TODO refresh open terminals?
+
+# Copy wallpaper image to firefox (Long term, try symlink to wallpaper.jpeg?)
+cp $HOME/pics/wallpapers/wallpaper.jpeg $HOME/.mozilla/firefox/gxmftrrv.default-release/chrome/wallpaper.jpeg
