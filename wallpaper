@@ -1,10 +1,12 @@
 #!/bin/bash
 
+. "$HOME/.cache/wal/colors.sh"
+
 # Active wallpaper lives at $HOME/pics/wallpapers/wallpaper
 
 
 #check for arg to image
-if [ $@ -ne 1 ] || [ grep -q "image data" $1 ]; then
+if [[ $# -ne 1  ||  $(file $1 | grep -c "image data") -lt 1 ]]; then
     echo "Wallpaper requries image file as argument"
     exit 1
 fi
@@ -18,33 +20,39 @@ cp $1 $HOME/pics/wallpapers/wallpaper
 cp $HOME/pics/wallpapers/wallpaper $HOME/.mozilla/firefox/gxmftrrv.default-release/chrome/wallpaper
 
 # Use pywal to adjust colors for wallpaper
-wal -i $HOME/pics/wallpapers/wallpaper >> /dev/null
+# rm cached pywal
+#rm $HOME/.cache/wal/schemes/_home_bergsm_pics_wallpapers_wallpaper_dark_None_None_1.1.0.json
+rm -rf $HOME/.cache/wal/*
+wal -i $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
+
 
 #Change i3bar colors in .Xresources
-sed -i "/wal.color0/c\wal.color0: $color0" $HOME/.Xresources
-sed -i "/wal.color1/c\wal.color1: $color1" $HOME/.Xresources
-sed -i "/wal.color2/c\wal.color2: $color2" $HOME/.Xresources
-sed -i "/wal.color3/c\wal.color3: $color3" $HOME/.Xresources
-sed -i "/wal.color4/c\wal.color4: $color4" $HOME/.Xresources
-sed -i "/wal.color5/c\wal.color5: $color5" $HOME/.Xresources
-sed -i "/wal.color6/c\wal.color6: $color6" $HOME/.Xresources
-sed -i "/wal.color7/c\wal.color7: $color7" $HOME/.Xresources
-sed -i "/wal.color8/c\wal.color8: $color8" $HOME/.Xresources
-sed -i "/wal.color9/c\wal.color9: $color9" $HOME/.Xresources
-sed -i "/wal.color10/c\wal.color10: $color10" $HOME/.Xresources
-sed -i "/wal.color11/c\wal.color11: $color11" $HOME/.Xresources
-sed -i "/wal.color12/c\wal.color12: $color12" $HOME/.Xresources
-sed -i "/wal.color13/c\wal.color13: $color13" $HOME/.Xresources
-sed -i "/wal.color14/c\wal.color14: $color14" $HOME/.Xresources
-sed -i "/wal.color15/c\wal.color15: $color15" $HOME/.Xresources
+#sed -i "/wal.color0/c\wal.color0: $color0" $HOME/.Xresources
+#sed -i "0,/wal.color1/{s/^wal.color1.*/wal.color1: $color1/}" $HOME/.Xresources
+#sed -i "/wal.color2/c\wal.color2: $color2" $HOME/.Xresources
+#sed -i "/wal.color3/c\wal.color3: $color3" $HOME/.Xresources
+#sed -i "/wal.color4/c\wal.color4: $color4" $HOME/.Xresources
+#sed -i "/wal.color5/c\wal.color5: $color5" $HOME/.Xresources
+#sed -i "/wal.color6/c\wal.color6: $color6" $HOME/.Xresources
+#sed -i "/wal.color7/c\wal.color7: $color7" $HOME/.Xresources
+#sed -i "/wal.color8/c\wal.color8: $color8" $HOME/.Xresources
+#sed -i "/wal.color9/c\wal.color9: $color9" $HOME/.Xresources
+#sed -i "/wal.color10/c\wal.color10: $color10" $HOME/.Xresources
+#sed -i "/wal.color11/c\wal.color11: $color11" $HOME/.Xresources
+#sed -i "/wal.color12/c\wal.color12: $color12" $HOME/.Xresources
+#sed -i "/wal.color13/c\wal.color13: $color13" $HOME/.Xresources
+#sed -i "/wal.color14/c\wal.color14: $color14" $HOME/.Xresources
+#sed -i "/wal.color15/c\wal.color15: $color15" $HOME/.Xresources
+
+#xrdb $HOME/.Xresources
+#sleep 3
 
 # Reload i3bar
-$pid=$(ps -A | grep i3bar | cut -d ' ' -f 3)
-kill $pid
-nohup i3bar --bar_id=bar-0 --socket=/run/user/1000/i3/ipc-socket.798 &
+#killall i3bar >> /dev/null 2>&1
+#nohup i3bar --bar_id=bar-0 --socket=/run/user/1000/i3/ipc-socket.798 >> /dev/null 2>&1 &
 
 # Use feh to set wallpaper?
 #feh $HOME/pics/wallpapers/wallpaper.jpeg --bg-fill
 
 #Set multilockscreen wallpapers
-multilockscreen -u $HOME/pics/wallpapers/wallpaper >> /dev/null
+#multilockscreen -u $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
