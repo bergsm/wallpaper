@@ -1,9 +1,8 @@
 #!/bin/bash
 
-#. "$HOME/.cache/wal/colors.sh"
-
 # Active wallpaper lives at $HOME/pics/wallpapers/wallpaper
 
+#TODO args for day and night wallpapers
 
 #check for arg to image
 if [[ $# -ne 1  ||  $(file $1 | grep -c "image data") -lt 1 ]]; then
@@ -46,13 +45,25 @@ sed -i "/wal.color14/c\wal.color14: $color14" $HOME/.Xresources
 sed -i "/wal.color15/c\wal.color15: $color15" $HOME/.Xresources
 
 xrdb $HOME/.Xresources
-#sleep 3
+#sleep 1
 
-# Reload i3bar
-xdotool key Super+Shift+r
+# Reload i3bar (won't reload if lock screen active)
+if pgrep -x "i3lock" > /dev/null; then
+    killall i3lock
+    xdotool key Super+Shift+r
+    #TODO make multilockscreen fast via caching (previous 5 or so ) and single wallpaper generation (blur)
+    multilockscreen -u $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
+    multilockscreen -l blur > /dev/null 2>&1
+else
+    xdotool key Super+Shift+r
+    multilockscreen -u $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
+fi
+#killall i3bar
+#nohup i3bar --bar_id=bar-0 & >> /dev/null 2>&1
 
 # Use feh to set wallpaper?
 #feh $HOME/pics/wallpapers/wallpaper.jpeg --bg-fill
 
 #Set multilockscreen wallpapers
-multilockscreen -u $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
+#multilockscreen -u $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
+
