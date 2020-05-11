@@ -38,6 +38,7 @@ cp $HOME/pics/wallpapers/wallpaper $HOME/.mozilla/firefox/gxmftrrv.default-relea
 # rm cached pywal
 wait $pid
 rm -rf $HOME/.cache/wal/*
+#TODO make this transition smoother if possible?
 wal -i $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
 
 . "$HOME/.cache/wal/colors.sh"
@@ -63,8 +64,10 @@ sed -i "/wal.color15/c\wal.color15: $color15" $HOME/.Xresources
 xrdb $HOME/.Xresources
 #sleep 1
 
+
 # Reload i3bar and lock screen (have to kill i3lock if active to reload)
 if pgrep -x "i3lock" > /dev/null; then
+    #TODO make this transition smoother if possible?
     killall i3lock
     xdotool key Super+Shift+r
     multilockscreen -l blur > /dev/null 2>&1
