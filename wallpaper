@@ -10,6 +10,17 @@ if [[ $# -ne 1  ||  $(file $1 | grep -c "image data") -lt 1 ]]; then
     exit 1
 fi
 
+#Case night
+#See if we can check if it's night with redshift
+#If night then replace immediately, else just replace line
+#in redshift hooks
+
+
+#Case day
+#See if we can check if it's day with redshift
+#If day then replace immediately, else just replace line
+#in redshift hooks
+
 
 #TODO make multilockscreen fast via caching (previous 5 or so ) and single wallpaper generation (blur)
 multilockscreen -u $1 >> /dev/null 2>&1 &
