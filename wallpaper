@@ -10,6 +10,11 @@ if [[ $# -ne 1  ||  $(file $1 | grep -c "image data") -lt 1 ]]; then
     exit 1
 fi
 
+
+#TODO make multilockscreen fast via caching (previous 5 or so ) and single wallpaper generation (blur)
+multilockscreen -u $1 >> /dev/null 2>&1 &
+pid=$!
+
 #Replace active wallpaper with new wallpaper
 mv $HOME/pics/wallpapers/wallpaper $HOME/pics/wallpapers/wallpaper_old_$(date '+%b%d%Y_%H%M%S')
 
@@ -20,7 +25,7 @@ cp $HOME/pics/wallpapers/wallpaper $HOME/.mozilla/firefox/gxmftrrv.default-relea
 
 # Use pywal to adjust colors for wallpaper
 # rm cached pywal
-#rm $HOME/.cache/wal/schemes/_home_bergsm_pics_wallpapers_wallpaper_dark_None_None_1.1.0.json
+wait $pid
 rm -rf $HOME/.cache/wal/*
 wal -i $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
 
@@ -47,23 +52,11 @@ sed -i "/wal.color15/c\wal.color15: $color15" $HOME/.Xresources
 xrdb $HOME/.Xresources
 #sleep 1
 
-# Reload i3bar (won't reload if lock screen active)
+# Reload i3bar and lock screen (have to kill i3lock if active to reload)
 if pgrep -x "i3lock" > /dev/null; then
     killall i3lock
     xdotool key Super+Shift+r
-    #TODO make multilockscreen fast via caching (previous 5 or so ) and single wallpaper generation (blur)
-    multilockscreen -u $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
     multilockscreen -l blur > /dev/null 2>&1
 else
     xdotool key Super+Shift+r
-    multilockscreen -u $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
 fi
-#killall i3bar
-#nohup i3bar --bar_id=bar-0 & >> /dev/null 2>&1
-
-# Use feh to set wallpaper?
-#feh $HOME/pics/wallpapers/wallpaper.jpeg --bg-fill
-
-#Set multilockscreen wallpapers
-#multilockscreen -u $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
-
