@@ -10,17 +10,6 @@ if [[ $# -ne 1  ||  $(file $1 | grep -c "image data") -lt 1 ]]; then
     exit 1
 fi
 
-#Case night
-#See if we can check if it's night with redshift
-#If night then replace immediately, else just replace line
-#in redshift hooks
-
-
-#Case day
-#See if we can check if it's day with redshift
-#If day then replace immediately, else just replace line
-#in redshift hooks
-
 
 #TODO make multilockscreen fast via caching (previous 5 or so ) and single wallpaper generation (blur)
 multilockscreen -u $1 >> /dev/null 2>&1 &
@@ -36,41 +25,97 @@ cp $HOME/pics/wallpapers/wallpaper $HOME/.mozilla/firefox/gxmftrrv.default-relea
 
 # Use pywal to adjust colors for wallpaper
 # rm cached pywal
-wait $pid
+#wait $pid
 rm -rf $HOME/.cache/wal/*
-#TODO make this transition smoother if possible?
-wal -i $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
-
-. "$HOME/.cache/wal/colors.sh"
-
-#Change i3bar colors in .Xresources
-sed -i "/wal.color0/c\wal.color0: $color0" $HOME/.Xresources
-sed -i "0,/wal.color1/{s/^wal.color1.*/wal.color1: $color1/}" $HOME/.Xresources
-sed -i "/wal.color2/c\wal.color2: $color2" $HOME/.Xresources
-sed -i "/wal.color3/c\wal.color3: $color3" $HOME/.Xresources
-sed -i "/wal.color4/c\wal.color4: $color4" $HOME/.Xresources
-sed -i "/wal.color5/c\wal.color5: $color5" $HOME/.Xresources
-sed -i "/wal.color6/c\wal.color6: $color6" $HOME/.Xresources
-sed -i "/wal.color7/c\wal.color7: $color7" $HOME/.Xresources
-sed -i "/wal.color8/c\wal.color8: $color8" $HOME/.Xresources
-sed -i "/wal.color9/c\wal.color9: $color9" $HOME/.Xresources
-sed -i "/wal.color10/c\wal.color10: $color10" $HOME/.Xresources
-sed -i "/wal.color11/c\wal.color11: $color11" $HOME/.Xresources
-sed -i "/wal.color12/c\wal.color12: $color12" $HOME/.Xresources
-sed -i "/wal.color13/c\wal.color13: $color13" $HOME/.Xresources
-sed -i "/wal.color14/c\wal.color14: $color14" $HOME/.Xresources
-sed -i "/wal.color15/c\wal.color15: $color15" $HOME/.Xresources
-
-xrdb $HOME/.Xresources
+#wal -i $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
+#
+#. "$HOME/.cache/wal/colors.sh"
+#
+##Change i3bar colors in .Xresources
+#sed -i "/wal.color0/c\wal.color0: $color0" $HOME/.Xresources
+#sed -i "0,/wal.color1/{s/^wal.color1.*/wal.color1: $color1/}" $HOME/.Xresources
+#sed -i "/wal.color2/c\wal.color2: $color2" $HOME/.Xresources
+#sed -i "/wal.color3/c\wal.color3: $color3" $HOME/.Xresources
+#sed -i "/wal.color4/c\wal.color4: $color4" $HOME/.Xresources
+#sed -i "/wal.color5/c\wal.color5: $color5" $HOME/.Xresources
+#sed -i "/wal.color6/c\wal.color6: $color6" $HOME/.Xresources
+#sed -i "/wal.color7/c\wal.color7: $color7" $HOME/.Xresources
+#sed -i "/wal.color8/c\wal.color8: $color8" $HOME/.Xresources
+#sed -i "/wal.color9/c\wal.color9: $color9" $HOME/.Xresources
+#sed -i "/wal.color10/c\wal.color10: $color10" $HOME/.Xresources
+#sed -i "/wal.color11/c\wal.color11: $color11" $HOME/.Xresources
+#sed -i "/wal.color12/c\wal.color12: $color12" $HOME/.Xresources
+#sed -i "/wal.color13/c\wal.color13: $color13" $HOME/.Xresources
+#sed -i "/wal.color14/c\wal.color14: $color14" $HOME/.Xresources
+#sed -i "/wal.color15/c\wal.color15: $color15" $HOME/.Xresources
+#
+#xrdb $HOME/.Xresources
 #sleep 1
-
 
 # Reload i3bar and lock screen (have to kill i3lock if active to reload)
 if pgrep -x "i3lock" > /dev/null; then
-    #TODO make this transition smoother if possible?
+    # wait for lock screen wallpaper to generate
+    wait $pid
+    #kill lock screen to make changes (won't work properly when locked)
     killall i3lock
+    wal -i $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
+
+    . "$HOME/.cache/wal/colors.sh"
+
+    #Change i3bar colors in .Xresources
+    sed -i "/wal.color0/c\wal.color0: $color0" $HOME/.Xresources
+    sed -i "0,/wal.color1/{s/^wal.color1.*/wal.color1: $color1/}" $HOME/.Xresources
+    sed -i "/wal.color2/c\wal.color2: $color2" $HOME/.Xresources
+    sed -i "/wal.color3/c\wal.color3: $color3" $HOME/.Xresources
+    sed -i "/wal.color4/c\wal.color4: $color4" $HOME/.Xresources
+    sed -i "/wal.color5/c\wal.color5: $color5" $HOME/.Xresources
+    sed -i "/wal.color6/c\wal.color6: $color6" $HOME/.Xresources
+    sed -i "/wal.color7/c\wal.color7: $color7" $HOME/.Xresources
+    sed -i "/wal.color8/c\wal.color8: $color8" $HOME/.Xresources
+    sed -i "/wal.color9/c\wal.color9: $color9" $HOME/.Xresources
+    sed -i "/wal.color10/c\wal.color10: $color10" $HOME/.Xresources
+    sed -i "/wal.color11/c\wal.color11: $color11" $HOME/.Xresources
+    sed -i "/wal.color12/c\wal.color12: $color12" $HOME/.Xresources
+    sed -i "/wal.color13/c\wal.color13: $color13" $HOME/.Xresources
+    sed -i "/wal.color14/c\wal.color14: $color14" $HOME/.Xresources
+    sed -i "/wal.color15/c\wal.color15: $color15" $HOME/.Xresources
+
+    xrdb $HOME/.Xresources
+    # see if user has returned during script
+    idle=$(xprintidle)
     xdotool key Super+Shift+r
-    multilockscreen -l blur > /dev/null 2>&1
+
+    # if user is back don't lock them back out
+    if [[ $idle -gt 60000 ]]; then
+        multilockscreen -l blur > /dev/null 2>&1
+    fi
+
 else
+    wal -i $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
+
+    . "$HOME/.cache/wal/colors.sh"
+
+    #Change i3bar colors in .Xresources
+    sed -i "/wal.color0/c\wal.color0: $color0" $HOME/.Xresources
+    sed -i "0,/wal.color1/{s/^wal.color1.*/wal.color1: $color1/}" $HOME/.Xresources
+    sed -i "/wal.color2/c\wal.color2: $color2" $HOME/.Xresources
+    sed -i "/wal.color3/c\wal.color3: $color3" $HOME/.Xresources
+    sed -i "/wal.color4/c\wal.color4: $color4" $HOME/.Xresources
+    sed -i "/wal.color5/c\wal.color5: $color5" $HOME/.Xresources
+    sed -i "/wal.color6/c\wal.color6: $color6" $HOME/.Xresources
+    sed -i "/wal.color7/c\wal.color7: $color7" $HOME/.Xresources
+    sed -i "/wal.color8/c\wal.color8: $color8" $HOME/.Xresources
+    sed -i "/wal.color9/c\wal.color9: $color9" $HOME/.Xresources
+    sed -i "/wal.color10/c\wal.color10: $color10" $HOME/.Xresources
+    sed -i "/wal.color11/c\wal.color11: $color11" $HOME/.Xresources
+    sed -i "/wal.color12/c\wal.color12: $color12" $HOME/.Xresources
+    sed -i "/wal.color13/c\wal.color13: $color13" $HOME/.Xresources
+    sed -i "/wal.color14/c\wal.color14: $color14" $HOME/.Xresources
+    sed -i "/wal.color15/c\wal.color15: $color15" $HOME/.Xresources
+
+    xrdb $HOME/.Xresources
+
     xdotool key Super+Shift+r
+    wait $pid
 fi
+
