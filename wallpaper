@@ -11,8 +11,8 @@ if [[ $# -ne 1  ||  $(file $1 | grep -c "image data") -lt 1 ]]; then
 fi
 
 
-#TODO make multilockscreen fast via caching (previous 5 or so ) and single wallpaper generation (blur)
-multilockscreen -u $1 >> /dev/null 2>&1 &
+#TODO make multilockscreen fast via caching (previous 5 or so ) and single wallpaper generation (blur DONE)
+multilockscreen --fx blur -u $1 >> /dev/null 2>&1 &
 pid=$!
 
 #Replace active wallpaper with new wallpaper
@@ -53,10 +53,12 @@ rm -rf $HOME/.cache/wal/*
 #sleep 1
 
 # Reload i3bar and lock screen (have to kill i3lock if active to reload)
+wait $pid
+#TODO store pgrep into variable
 if pgrep -x "i3lock" > /dev/null; then
     # wait for lock screen wallpaper to generate
-    wait $pid
     #kill lock screen to make changes (won't work properly when locked)
+    #wait $pid
     killall i3lock
     wal -i $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
 
@@ -91,6 +93,7 @@ if pgrep -x "i3lock" > /dev/null; then
     fi
 
 else
+    #wait $pid
     wal -i $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
 
     . "$HOME/.cache/wal/colors.sh"
@@ -116,6 +119,5 @@ else
     xrdb $HOME/.Xresources
 
     xdotool key Super+Shift+r
-    wait $pid
 fi
 
