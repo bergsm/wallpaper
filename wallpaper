@@ -26,7 +26,7 @@ cp $HOME/pics/wallpapers/wallpaper $HOME/.mozilla/firefox/gxmftrrv.default-relea
 # Use pywal to adjust colors for wallpaper
 # rm cached pywal
 #wait $pid
-rm -rf $HOME/.cache/wal/*
+#rm -rf $HOME/.cache/wal/*
 #wal -i $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
 #
 #. "$HOME/.cache/wal/colors.sh"
@@ -60,6 +60,7 @@ if pgrep -x "i3lock" > /dev/null; then
     #kill lock screen to make changes (won't work properly when locked)
     #wait $pid
     killall i3lock
+    rm -rf $HOME/.cache/wal/*
     wal -i $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
 
     . "$HOME/.cache/wal/colors.sh"
@@ -86,6 +87,7 @@ if pgrep -x "i3lock" > /dev/null; then
     # see if user has returned during script
     idle=$(xprintidle)
     xdotool key Super+Shift+r
+    sleep 1
 
     # if user is back don't lock them back out
     if [[ $idle -gt 60000 ]]; then
@@ -94,6 +96,7 @@ if pgrep -x "i3lock" > /dev/null; then
 
 else
     #wait $pid
+    rm -rf $HOME/.cache/wal/*
     wal -i $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
 
     . "$HOME/.cache/wal/colors.sh"
