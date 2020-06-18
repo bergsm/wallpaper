@@ -5,7 +5,7 @@
 #TODO args for day and night wallpapers
 
 #check for arg to image
-if [[ $# -ne 1  ||  $(file $1 | grep -c "image data") -lt 1 ]]; then
+if [[ $# -lt 1  ||  $(file $1 | grep -c "image data") -lt 1 ]]; then
     echo "Wallpaper requries image file as argument"
     exit 1
 fi
