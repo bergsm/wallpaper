@@ -15,48 +15,14 @@ fi
 multilockscreen --fx blur -u $1 >> /dev/null 2>&1 &
 pid=$!
 
-#Replace active wallpaper with new wallpaper
-mv $HOME/pics/wallpapers/wallpaper $HOME/pics/wallpapers/wallpaper_old_$(date '+%b%d%Y_%H%M%S')
-
-cp $1 $HOME/pics/wallpapers/wallpaper
-
-# Copy wallpaper image to firefox (Long term, try symlink to wallpaper)
-cp $HOME/pics/wallpapers/wallpaper $HOME/.mozilla/firefox/gxmftrrv.default-release/chrome/wallpaper
-
-# Use pywal to adjust colors for wallpaper
-# rm cached pywal
-#wait $pid
-#rm -rf $HOME/.cache/wal/*
-#wal -i $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
-#
-#. "$HOME/.cache/wal/colors.sh"
-#
-##Change i3bar colors in .Xresources
-#sed -i "/wal.color0/c\wal.color0: $color0" $HOME/.Xresources
-#sed -i "0,/wal.color1/{s/^wal.color1.*/wal.color1: $color1/}" $HOME/.Xresources
-#sed -i "/wal.color2/c\wal.color2: $color2" $HOME/.Xresources
-#sed -i "/wal.color3/c\wal.color3: $color3" $HOME/.Xresources
-#sed -i "/wal.color4/c\wal.color4: $color4" $HOME/.Xresources
-#sed -i "/wal.color5/c\wal.color5: $color5" $HOME/.Xresources
-#sed -i "/wal.color6/c\wal.color6: $color6" $HOME/.Xresources
-#sed -i "/wal.color7/c\wal.color7: $color7" $HOME/.Xresources
-#sed -i "/wal.color8/c\wal.color8: $color8" $HOME/.Xresources
-#sed -i "/wal.color9/c\wal.color9: $color9" $HOME/.Xresources
-#sed -i "/wal.color10/c\wal.color10: $color10" $HOME/.Xresources
-#sed -i "/wal.color11/c\wal.color11: $color11" $HOME/.Xresources
-#sed -i "/wal.color12/c\wal.color12: $color12" $HOME/.Xresources
-#sed -i "/wal.color13/c\wal.color13: $color13" $HOME/.Xresources
-#sed -i "/wal.color14/c\wal.color14: $color14" $HOME/.Xresources
-#sed -i "/wal.color15/c\wal.color15: $color15" $HOME/.Xresources
-#
-#xrdb $HOME/.Xresources
-#sleep 1
-
-# Reload i3bar and lock screen (have to kill i3lock if active to reload)
+# wait for lock screen wallpaper to generate
 wait $pid
 #TODO store pgrep into variable
 if pgrep -x "i3lock" > /dev/null; then
-    # wait for lock screen wallpaper to generate
+
+    mv $HOME/pics/wallpapers/wallpaper $HOME/pics/wallpapers/wallpaper_old_$(date '+%b%d%Y_%H%M%S')
+    cp $1 $HOME/pics/wallpapers/wallpaper
+    cp $HOME/pics/wallpapers/wallpaper $HOME/.mozilla/firefox/gxmftrrv.default-release/chrome/wallpaper
     #kill lock screen to make changes (won't work properly when locked)
     #wait $pid
     killall i3lock
@@ -91,11 +57,14 @@ if pgrep -x "i3lock" > /dev/null; then
 
     # if user is back don't lock them back out
     if [[ $idle -gt 60000 ]]; then
-        multilockscreen -l blur > /dev/null 2>&1
+        multilockscreen -l > /dev/null 2>&1
     fi
 
 else
     #wait $pid
+    mv $HOME/pics/wallpapers/wallpaper $HOME/pics/wallpapers/wallpaper_old_$(date '+%b%d%Y_%H%M%S')
+    cp $1 $HOME/pics/wallpapers/wallpaper
+    cp $HOME/pics/wallpapers/wallpaper $HOME/.mozilla/firefox/gxmftrrv.default-release/chrome/wallpaper
     rm -rf $HOME/.cache/wal/*
     wal -i $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
 
