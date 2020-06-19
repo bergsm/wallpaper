@@ -36,16 +36,17 @@ wait $pid
 #TODO store pgrep into variable
 if pgrep -x "i3lock" > /dev/null; then
 
-    cp $HOME/pics/wallpapers/$filename $HOME/pics/wallpapers/wallpaper_old_$(date '+%b%d%Y_%H%M%S')
+    #cp $HOME/pics/wallpapers/$filename $HOME/pics/wallpapers/wallpaper_old_$(date '+%b%d%Y_%H%M%S')
     cp $1 $HOME/pics/wallpapers/$filename
     #kill lock screen to make changes (won't work properly when locked)
     #wait $pid
 
     if [[ $todArg == $todStatus ]]; then
+        cp $HOME/pics/wallpapers/$filename $HOME/pics/wallpapers/wallpaper
         cp $HOME/pics/wallpapers/$filename $HOME/.mozilla/firefox/gxmftrrv.default-release/chrome/wallpaper
         killall i3lock
         rm -rf $HOME/.cache/wal/*
-        wal -i $HOME/pics/wallpapers/$filename >> /dev/null 2>&1
+        wal -i $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
 
         . "$HOME/.cache/wal/colors.sh"
 
@@ -81,14 +82,15 @@ if pgrep -x "i3lock" > /dev/null; then
 
 else
     #wait $pid
-    cp $HOME/pics/wallpapers/$filename $HOME/pics/wallpapers/wallpaper_old_$(date '+%b%d%Y_%H%M%S')
+    #cp $HOME/pics/wallpapers/$filename $HOME/pics/wallpapers/wallpaper_old_$(date '+%b%d%Y_%H%M%S')
     cp $1 $HOME/pics/wallpapers/$filename
 
 
     if [[ $todArg == $todStatus ]]; then
+        cp $HOME/pics/wallpapers/$filename $HOME/pics/wallpapers/wallpaper
         cp $HOME/pics/wallpapers/$filename $HOME/.mozilla/firefox/gxmftrrv.default-release/chrome/wallpaper
         rm -rf $HOME/.cache/wal/*
-        wal -i $HOME/pics/wallpapers/$filename >> /dev/null 2>&1
+        wal -i $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
 
         . "$HOME/.cache/wal/colors.sh"
 
