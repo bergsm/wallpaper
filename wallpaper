@@ -24,7 +24,7 @@ else
     todArg=$todStatus
 fi
 
-if cmp -s $1 $HOME/pics/wallpapers/$filename; then
+if cmp -s $1 $HOME/pics/wallpapers/wallpaper; then
     echo "Image file is already set as wallpaper"
     exit 1
 fi
