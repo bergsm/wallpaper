@@ -40,15 +40,12 @@ wait $pid
 #TODO store pgrep into variable
 if pgrep -x "i3lock" > /dev/null; then
 
-    #cp $HOME/pics/wallpapers/$filename $HOME/pics/wallpapers/wallpaper_old_$(date '+%b%d%Y_%H%M%S')
     cp $1 $HOME/pics/wallpapers/$filename
     #kill lock screen to make changes (won't work properly when locked)
-    #wait $pid
 
     if [[ $todArg == $todStatus ]]; then
         cp $HOME/pics/wallpapers/$filename $HOME/pics/wallpapers/wallpaper
         cp $HOME/pics/wallpapers/$filename $HOME/.mozilla/firefox/gxmftrrv.default-release/chrome/wallpaper
-        killall i3lock
         rm -rf $HOME/.cache/wal/*
         wal -i $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
 
@@ -74,21 +71,19 @@ if pgrep -x "i3lock" > /dev/null; then
 
         xrdb $HOME/.Xresources
         # see if user has returned during script
-        idle=$(xprintidle)
+        #idle=$(xprintidle)
+        killall i3lock
         xdotool key Super+Shift+r
-        sleep 1
+        #sleep 1
+        multilockscreen -l > /dev/null 2>&1
 
         # if user is back don't lock them back out
-        if [[ $idle -gt 60000 ]]; then
-            multilockscreen -l > /dev/null 2>&1
-        fi
+        #if [[ $idle -gt 60000 ]]; then
+        #fi
     fi
 
 else
-    #wait $pid
-    #cp $HOME/pics/wallpapers/$filename $HOME/pics/wallpapers/wallpaper_old_$(date '+%b%d%Y_%H%M%S')
     cp $1 $HOME/pics/wallpapers/$filename
-
 
     if [[ $todArg == $todStatus ]]; then
         cp $HOME/pics/wallpapers/$filename $HOME/pics/wallpapers/wallpaper
