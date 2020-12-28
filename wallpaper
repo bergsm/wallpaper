@@ -24,10 +24,10 @@ else
     todArg=$todStatus
 fi
 
-if cmp -s $1 $HOME/pics/wallpapers/wallpaper; then
-    echo "Image file is already set as wallpaper"
-    exit 1
-fi
+#if cmp -s $1 $HOME/pics/wallpapers/wallpaper; then
+#    echo "Image file is already set as wallpaper"
+#    exit 1
+#fi
 
 #TODO make multilockscreen fast via caching (previous 5 or so ) and single wallpaper generation (blur DONE)
 if [[ $todArg == $todStatus ]]; then
