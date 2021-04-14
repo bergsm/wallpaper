@@ -2,7 +2,6 @@
 
 # Active wallpaper lives at $HOME/pics/wallpapers/wallpaper
 
-#TODO args for day and night wallpapers
 
 #check for arg to image
 if [[ $# -lt 1  ||  $(file $1 | grep -c "image data") -lt 1 ]]; then
@@ -10,24 +9,26 @@ if [[ $# -lt 1  ||  $(file $1 | grep -c "image data") -lt 1 ]]; then
     exit 1
 fi
 
-#TODO if no tod arg, change to current
+
 filename="wallpaper"
 todArg=$(echo $2 | tr '[:upper:]' '[:lower:]')
 todStatus=$(cat $HOME/.config/redshift/status)
 
+#TODO args for sunrise / sunset
+#args for day and night wallpapers
 if [[ $todArg == "night" ]]; then
     filename=wallpaper_night
 elif [[ $todArg == "day" ]]; then
     filename=wallpaper_day
+elif [[ $todArg == "sunset" ]]; then
+    filename=wallpaper_sunset
+elif [[ $todArg == "sunrise" ]]; then
+    filename=wallpaper_sunrise
 else
     filename=wallpaper_$todStatus
     todArg=$todStatus
 fi
 
-#if cmp -s $1 $HOME/pics/wallpapers/wallpaper; then
-#    echo "Image file is already set as wallpaper"
-#    exit 1
-#fi
 
 #TODO make multilockscreen fast via caching (previous 5 or so ) and single wallpaper generation (blur DONE)
 if [[ $todArg == $todStatus ]]; then
