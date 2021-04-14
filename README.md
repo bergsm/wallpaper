@@ -1,1 +1,1 @@
-README for wallpaper
+Utility tool for setting system theme from desired wallpaper. This version depends on multilockscreen for setting lock screen wallpaper, but can be adjusted. Does depend on wal (formerly pywal) for setting system theme. Can also use in conjunction with provided redshift script. When placed in redshift hooks directory, you can set wallpapers for day, night, sunrise, and sunset, and redshift will kick this script off to change your theme at those times!
