@@ -47,7 +47,7 @@ if pgrep -x "i3lock" > /dev/null; then
         cp $HOME/pics/wallpapers/$filename $HOME/pics/wallpapers/wallpaper
         cp $HOME/pics/wallpapers/$filename $HOME/.mozilla/firefox/gxmftrrv.default-release/chrome/wallpaper
         rm -rf $HOME/.cache/wal/*
-        wal -i $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
+        wal -i $HOME/pics/wallpapers/wallpaper -b "#000000" -a 50 >> /dev/null 2>&1
 
         . "$HOME/.cache/wal/colors.sh"
 
@@ -89,7 +89,7 @@ else
         cp $HOME/pics/wallpapers/$filename $HOME/pics/wallpapers/wallpaper
         cp $HOME/pics/wallpapers/$filename $HOME/.mozilla/firefox/gxmftrrv.default-release/chrome/wallpaper
         rm -rf $HOME/.cache/wal/*
-        wal -i $HOME/pics/wallpapers/wallpaper >> /dev/null 2>&1
+        wal -i $HOME/pics/wallpapers/wallpaper -b "#000000" -a 50 >> /dev/null 2>&1
 
         . "$HOME/.cache/wal/colors.sh"
 
