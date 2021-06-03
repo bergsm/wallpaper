@@ -5,7 +5,7 @@
 
 #check for arg to image
 if [[ $# -lt 1  ||  $(file $1 | grep -c "image data") -lt 1 ]]; then
-    echo "Wallpaper requries image file as argument"
+    echo "Wallpaper requires image file as argument"
     exit 1
 fi
 
