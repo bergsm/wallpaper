@@ -32,7 +32,8 @@ fi
 
 #TODO make multilockscreen fast via caching (previous 5 or so ) and single wallpaper generation (blur DONE)
 if [[ $todArg == $todStatus ]]; then
-    multilockscreen --fx blur -u $1 >> /dev/null 2>&1 &
+    #multilockscreen --fx blur -u $1 >> /dev/null 2>&1 &
+    betterlockscreen -u $1 >> /dev/null 2>&1 &
     pid=$!
 fi
 
@@ -46,7 +47,8 @@ if pgrep -x "i3lock" > /dev/null; then
 
     if [[ $todArg == $todStatus ]]; then
         cp $HOME/pics/wallpapers/$filename $HOME/pics/wallpapers/wallpaper
-        cp $HOME/pics/wallpapers/$filename $HOME/.mozilla/firefox/gxmftrrv.default-release/chrome/wallpaper
+        cp $HOME/pics/wallpapers/wallpaper /usr/share/backgrounds/xinitrc/
+        #cp $HOME/pics/wallpapers/$filename $HOME/.mozilla/firefox/gxmftrrv.default-release/chrome/wallpaper
         rm -rf $HOME/.cache/wal/*
         wal -i $HOME/pics/wallpapers/wallpaper -b "#000000" -a 50 >> /dev/null 2>&1
 
@@ -88,7 +90,8 @@ else
 
     if [[ $todArg == $todStatus ]]; then
         cp $HOME/pics/wallpapers/$filename $HOME/pics/wallpapers/wallpaper
-        cp $HOME/pics/wallpapers/$filename $HOME/.mozilla/firefox/gxmftrrv.default-release/chrome/wallpaper
+        cp $HOME/pics/wallpapers/wallpaper /usr/share/backgrounds/xinitrc/
+        #cp $HOME/pics/wallpapers/$filename $HOME/.mozilla/firefox/gxmftrrv.default-release/chrome/wallpaper
         rm -rf $HOME/.cache/wal/*
         wal -i $HOME/pics/wallpapers/wallpaper -b "#000000" -a 50 >> /dev/null 2>&1
 
@@ -118,3 +121,7 @@ else
     fi
 fi
 
+python /home/shawn/prog/auto_rgb/govee.py --api-key "$(</home/shawn/prog/auto_rgb/govee_api_key)" --hex "$color2"
+bash /home/shawn/prog/auto_rgb/lightson.sh
+bash /home/shawn/prog/auto_rgb/dygma.sh
+pywalfox update
