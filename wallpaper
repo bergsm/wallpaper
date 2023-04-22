@@ -33,7 +33,7 @@ fi
 #TODO make multilockscreen fast via caching (previous 5 or so ) and single wallpaper generation (blur DONE)
 if [[ $todArg == $todStatus ]]; then
     #multilockscreen --fx blur -u $1 >> /dev/null 2>&1 &
-    betterlockscreen -u $1 >> /dev/null 2>&1 &
+    betterlockscreen --fx none -u $1 >> /dev/null 2>&1 &
     pid=$!
 fi
 
@@ -125,3 +125,4 @@ python /home/shawn/prog/auto_rgb/govee.py --api-key "$(</home/shawn/prog/auto_rg
 bash /home/shawn/prog/auto_rgb/lightson.sh
 bash /home/shawn/prog/auto_rgb/dygma.sh
 pywalfox update
+systemctl --user restart razer_mouse
